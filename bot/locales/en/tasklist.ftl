@@ -12,4 +12,4 @@ tasklist-settings-rename-msg = Enter a new tasklist name. Current name: { $name 
 
 tasklist-done = Task list <code>{ $name }</code> successfully created! 
     <blockquote>Click button below to copy the text, 
-    then paste it to send this task list in any chat."</blockquote>
+    then paste it to send this task list in any chat.</blockquote>
