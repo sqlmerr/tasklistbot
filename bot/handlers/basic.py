@@ -16,14 +16,19 @@ router = Router()
 
 
 @router.message(Command("start"))
-async def start_cmd(message: Message, user: User, i18n: I18nContext, dialog_manager: DialogManager):
+async def start_cmd(
+    message: Message, user: User, i18n: I18nContext, dialog_manager: DialogManager
+):
     if not user:
         user = User(user_id=message.from_user.id)
 
         await user.insert()
         logger.debug(f"registered new user with id {message.from_user.id}")
         msg_to_pin = await message.answer(
-            i18n.newbie.msg(user=message.from_user.first_name, bot_username=(await message.bot.me()).username)
+            i18n.newbie.msg(
+                user=message.from_user.first_name,
+                bot_username=(await message.bot.me()).username,
+            )
         )
         await msg_to_pin.pin()
         await create_task_list(message, dialog_manager)
@@ -33,7 +38,9 @@ async def start_cmd(message: Message, user: User, i18n: I18nContext, dialog_mana
 
 @router.callback_query(F.data == "create_tasklist")
 @router.message(Command("create"))
-async def create_task_list(event: CallbackQuery | Message, dialog_manager: DialogManager):
+async def create_task_list(
+    event: CallbackQuery | Message, dialog_manager: DialogManager
+):
     if isinstance(event, CallbackQuery):
         await event.answer()
     logger.debug(f"opening dialog for user {event.from_user.id}")

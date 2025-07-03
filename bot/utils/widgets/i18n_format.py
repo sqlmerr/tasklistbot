@@ -18,7 +18,6 @@ class I18NFormat(Text):
         text: str,
         locale: Optional[Union[TextWidget, MagicFilter, str]] = None,
         when: Optional[WhenCondition] = None,
-        /,
         **mapping: Union[TextWidget, MagicFilter, str, int, float, bool],
     ) -> None:
         super().__init__(when)
@@ -28,7 +27,9 @@ class I18NFormat(Text):
 
     @staticmethod
     async def _resolve(
-        value: Union[TextWidget, MagicFilter, str, int, float, bool], data: dict, manager: DialogManager
+        value: Union[TextWidget, MagicFilter, str, int, float, bool],
+        data: dict,
+        manager: DialogManager,
     ) -> Any:
         if isinstance(value, TextWidget):
             return await value.render_text(data, manager)
@@ -40,7 +41,9 @@ class I18NFormat(Text):
         transformed_data = {}
         for key, val in self.mapping.items():
             resolved_val = await self._resolve(val, data, manager)
-            transformed_data[key] = "" if resolved_val is None else resolved_val  # Fluent does not support None
+            transformed_data[key] = (
+                "" if resolved_val is None else resolved_val
+            )  # Fluent does not support None
         return transformed_data
 
     async def _render_text(self, data: dict, manager: DialogManager) -> str:
@@ -49,6 +52,8 @@ class I18NFormat(Text):
             raise ValueError("I18nContext not found in manager.middleware_data")
 
         transformed_data = await self._transform(data, manager)
-        locale_str = await self._resolve(self.locale, data, manager) if self.locale else None
+        locale_str = (
+            await self._resolve(self.locale, data, manager) if self.locale else None
+        )
 
         return i18n.get(self.text, locale_str, **transformed_data)

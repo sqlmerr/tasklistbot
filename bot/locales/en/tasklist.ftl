@@ -11,5 +11,8 @@ tasklist-settings-rename-btn = Rename
 tasklist-settings-rename-msg = Enter a new tasklist name. Current name: { $name }. Maximum 128 letters
 
 tasklist-done = Task list <code>{ $name }</code> successfully created! 
-    <blockquote>Click button below to copy the text, 
-    then paste it to send this task list in any chat.</blockquote>
+    <blockquote>Click button below to send this task list in any chat.</blockquote>
+
+tasklist-menu-delete-mode-msg = Delete mode enabled!
+
+tasklist-confirm-delete = Are you sure you want to delete this task?

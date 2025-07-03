@@ -13,3 +13,7 @@ tasklist-settings-rename-msg = Введите новое имя. Текущее 
 tasklist-done = Список задач <code>{ $name }</code> успешно создан! 
     <blockquote>Нажмите на кнопку ниже, чтобы скопировать текст, 
     вставив который вы сможете отправить этот список задач в любой чат</blockquote>
+
+tasklist-menu-delete-mode-msg = Режим очистки активирован!
+
+tasklist-confirm-delete = Вы уверены, что вы хотите удалить эту задачу?

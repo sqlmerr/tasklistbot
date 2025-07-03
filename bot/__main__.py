@@ -31,9 +31,7 @@ async def startup(bot: Bot):
 
 def create_dispatcher() -> Dispatcher:
     dp = Dispatcher()
-    dp.startup.register(
-        startup
-    )
+    dp.startup.register(startup)
 
     dp.message.middleware(ThrottlingMiddleware())
     dp.callback_query.middleware(ThrottlingMiddleware())
