@@ -1,4 +1,4 @@
-from .models import User
+from .models import User, TaskOption, TaskList
 from .requests import get_user
 
 

@@ -14,21 +14,26 @@ from bot.middlewares import UserMiddleware, ThrottlingMiddleware
 from bot.config import settings
 
 from bot.commands import set_bot_commands
-from bot.db import User
+from bot.db import User, TaskList
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from bot.dialogs import example as example_dialog
+from bot.dialogs import create_list as create_list_dialog
 from aiogram_dialog import setup_dialogs
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+async def startup(bot: Bot):
+    logger.info("Bot successfully started as @%s", (await bot.me()).username)
 
 
 def create_dispatcher() -> Dispatcher:
     dp = Dispatcher()
     dp.startup.register(
-        lambda: logger.info("Bot successfully started")
-    )  # or create function with your custom logic
+        startup
+    )
 
     dp.message.middleware(ThrottlingMiddleware())
     dp.callback_query.middleware(ThrottlingMiddleware())
@@ -38,7 +43,7 @@ def create_dispatcher() -> Dispatcher:
 
     router = register_routers()
     dp.include_router(router)
-    dp.include_routers(example_dialog.ui)  # all your dialogs
+    dp.include_routers(create_list_dialog.ui)  # all your dialogs
     setup_dialogs(dp)
 
     i18n_middleware = I18nMiddleware(
@@ -51,7 +56,7 @@ def create_dispatcher() -> Dispatcher:
 
 async def init_db() -> None:
     mongo = AsyncIOMotorClient(settings.MONGO_URL.get_secret_value())
-    await init_beanie(database=mongo.your_db_name, document_models=[User])
+    await init_beanie(database=mongo.your_db_name, document_models=[User, TaskList])
 
 
 async def main():
@@ -73,9 +78,12 @@ async def main():
 
 async def on_webhook_startup(bot: Bot) -> None:
     await init_db()
+    logger.info("mongodb is loaded")
+
+    await bot.delete_webhook(drop_pending_updates=True)
 
     await bot.set_webhook(
-        f"{settings.BASE_WEBHOOK_URL}{settings.WEBHOOK_PATH}",
+        f"{settings.BASE_WEBHOOK_URL}/{settings.WEBHOOK_PATH}",
         secret_token=settings.WEBHOOK_SECRET,
     )
 

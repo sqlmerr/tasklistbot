@@ -3,6 +3,8 @@ services:
     image: mongo:6-jammy
     volumes:
       - mongodb-data:/data/db
+    ports:
+      - 27017:27017
     env_file:
       - .env
   bot:

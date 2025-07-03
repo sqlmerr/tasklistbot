@@ -1,2 +1,0 @@
-example =
-    текст, { $some }

@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     BOT_TOKEN: SecretStr
     MONGO_URL: SecretStr = Field("mongodb://localhost:27017/")
 
-    use_webhooks: bool = True
+    use_webhooks: bool = False
     WEB_SERVER_HOST: str = "127.0.0.1"
     WEB_SERVER_PORT: int = 8080
     BASE_WEBHOOK_URL: str = "https://example.com"
