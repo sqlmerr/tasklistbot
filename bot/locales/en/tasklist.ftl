@@ -8,8 +8,8 @@ tasklist-settings-btn = Settings
 
 tasklist-settings-rename-btn = Rename
 
-tasklist-settings-rename-msg = Enter new tasklist name. Current name: { $name }. Maximum 128 letters
+tasklist-settings-rename-msg = Enter a new tasklist name. Current name: { $name }. Maximum 128 letters
 
 tasklist-done = Task list <code>{ $name }</code> successfully created! 
-    <blockquote>Click button down below to copy the text, 
-    by pasting which you can send this task list in any chat</blockquote>
+    <blockquote>Click button below to copy the text, 
+    then paste it to send this task list in any chat.</blockquote>
