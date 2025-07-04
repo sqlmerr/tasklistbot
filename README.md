@@ -1,4 +1,4 @@
-# Telegram bot template
+# Task list bot
 
 ### Features:
  - Python
@@ -8,8 +8,8 @@
 
 ### Install
 ```bash
-git clone https://github.com/sqlmerr/aiogram-bot-template
-cd aiogram-bot-template
+git clone https://github.com/sqlmerr/tasklistbot
+cd tasklistbot
 
 # install uv (https://docs.astral.sh/uv/getting-started/installation/#installation-methods)
 curl -LsSf https://astral.sh/uv/install.sh | sh 
