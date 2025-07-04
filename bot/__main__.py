@@ -19,6 +19,7 @@ from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from bot.dialogs import create_list as create_list_dialog
+from bot.dialogs import edit_list_settings as edit_list_settings_dialog
 from aiogram_dialog import setup_dialogs
 
 logging.basicConfig(level=logging.INFO)
@@ -38,10 +39,11 @@ def create_dispatcher() -> Dispatcher:
 
     dp.message.middleware(UserMiddleware())
     dp.callback_query.middleware(UserMiddleware())
+    dp.inline_query.middleware(UserMiddleware())
 
     router = register_routers()
     dp.include_router(router)
-    dp.include_routers(create_list_dialog.ui)  # all your dialogs
+    dp.include_routers(create_list_dialog.ui, edit_list_settings_dialog.ui)
     setup_dialogs(dp)
 
     i18n_middleware = I18nMiddleware(
