@@ -17,3 +17,5 @@ tasklist-done = Список задач <code>{ $name }</code> успешно с
 tasklist-menu-delete-mode-msg = Режим очистки активирован!
 
 tasklist-confirm-delete = Вы уверены, что вы хотите удалить эту задачу?
+
+tasklist-all-msg = <i>Ваши списки задач:</i>

@@ -16,3 +16,5 @@ tasklist-done = Task list <code>{ $name }</code> successfully created!
 tasklist-menu-delete-mode-msg = Delete mode enabled!
 
 tasklist-confirm-delete = Are you sure you want to delete this task?
+
+tasklist-all-msg = <i>Your tasklists:</i>

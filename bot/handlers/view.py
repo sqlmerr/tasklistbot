@@ -1,12 +1,14 @@
 import secrets
 
-from aiogram import Router, F
-from aiogram.types import InlineQuery, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup, CallbackQuery
+from aiogram import Bot, Router, F
+from aiogram.types import InlineQuery, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup, CallbackQuery, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.filters import Command
 from aiogram_i18n import I18nContext
 from beanie import PydanticObjectId
 
-from bot.db.models import TaskList
+from bot.db.models import TaskList, User
+from bot.db.requests import get_task_lists_by_user
 from bot.utils.calldata import OptionClickData
 
 router = Router()
@@ -66,7 +68,7 @@ def generate_tasklist_markup(tasklist: TaskList) -> InlineKeyboardMarkup:
     return b.as_markup()
 
 @router.callback_query(OptionClickData.filter())
-async def option_click(call: CallbackQuery, callback_data: OptionClickData, i18n: I18nContext):
+async def option_click(call: CallbackQuery, callback_data: OptionClickData, i18n: I18nContext, bot: Bot):
     if callback_data.user_id != call.from_user.id:
         await call.answer(i18n.get("not-allowed"))
         return
@@ -74,12 +76,28 @@ async def option_click(call: CallbackQuery, callback_data: OptionClickData, i18n
 
     tasklist = await TaskList.get(callback_data.list_id, fetch_links=True)
     if not tasklist:
-        await call.bot.edit_message_reply_markup(inline_message_id=call.inline_message_id, reply_markup=InlineKeyboardMarkup(inline_keyboard=[]))
+        if not call.message:
+            await bot.edit_message_reply_markup(inline_message_id=call.inline_message_id, reply_markup=InlineKeyboardMarkup(inline_keyboard=[]))
+        else:
+            await bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id, reply_markup=InlineKeyboardMarkup(inline_keyboard=[]))
         return
     
     tasklist.options[callback_data.option_index].completed = not tasklist.options[callback_data.option_index].completed
     await tasklist.save()
 
     markup = generate_tasklist_markup(tasklist)
-    await call.bot.edit_message_reply_markup(inline_message_id=call.inline_message_id, reply_markup=markup)
+    if not call.message:
+        await bot.edit_message_reply_markup(inline_message_id=call.inline_message_id, reply_markup=markup)
+    else:
+        await bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id, reply_markup=markup)
     
+
+@router.message(Command("my"))
+async def get_all_lists(message: Message, user: User, i18n: I18nContext):
+    tasklists = await get_task_lists_by_user(user.id)
+    b = InlineKeyboardBuilder()
+    for t in tasklists:
+        b.button(text=t.title, switch_inline_query_current_chat=f"open:{t.id}")
+    b.adjust(1)
+
+    await message.reply(i18n.tasklist.all.msg(), reply_markup=b.as_markup())
