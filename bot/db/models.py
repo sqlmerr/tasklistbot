@@ -29,31 +29,17 @@ SecurityRuleTypes = [
 
 
 class SecurityRule(BaseModel):
-    rule_type: ClassVar[SecurityRuleType]
+    rule_type: SecurityRuleType = SecurityRuleType.OWNER
+    users: list[int] | None = None
 
-
-class EveryoneRule(SecurityRule):
-    rule_type = SecurityRuleType.EVERYONE
-
-
-class SelectedRule(SecurityRule):
-    rule_type = SecurityRuleType.SELECTED
-    users: list[int]
-
-
-class OwnerRule(SecurityRule):
-    rule_type = SecurityRuleType.OWNER
-
-
-Rule: TypeAlias = EveryoneRule | SelectedRule | OwnerRule
-
+Rule: TypeAlias = SecurityRule
 
 class TaskListSecurity(BaseModel):
-    read: Rule = EveryoneRule()
-    mark_tasks_as_completed: Rule = OwnerRule()
-    add_new_tasks: Rule = OwnerRule()
-    edit_tasks: Rule = OwnerRule()
-    delete_tasks: Rule = OwnerRule()
+    read: Rule = SecurityRule(rule_type=SecurityRuleType.EVERYONE)
+    mark_tasks_as_completed: Rule = SecurityRule(rule_type=SecurityRuleType.OWNER)
+    add_new_tasks: Rule = SecurityRule(rule_type=SecurityRuleType.OWNER)
+    edit_tasks: Rule = SecurityRule(rule_type=SecurityRuleType.OWNER)
+    delete_tasks: Rule = SecurityRule(rule_type=SecurityRuleType.OWNER)
 
 
 SecurityPermissions = tuple(TaskListSecurity().__dict__.keys())

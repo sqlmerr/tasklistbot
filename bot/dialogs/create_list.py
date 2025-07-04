@@ -15,11 +15,9 @@ from aiogram_dialog.widgets.text import Const, Format
 from aiogram_dialog.widgets.input import TextInput
 
 from bot.db.models import (
-    EveryoneRule,
-    OwnerRule,
     Rule,
+    SecurityRule,
     SecurityRuleType,
-    SelectedRule,
     TaskList,
     TaskOption,
     User,
@@ -83,15 +81,12 @@ async def done(callback: CallbackQuery, button: Button, manager: DialogManager) 
         if not attr:
             continue
         rule_type: SecurityRuleType = SecurityRuleType(v["rule_type"])
-        if rule_type == SecurityRuleType.EVERYONE:
-            attr = EveryoneRule()
-        elif rule_type == SecurityRuleType.OWNER:
-            attr = OwnerRule()
-        elif rule_type == SecurityRuleType.SELECTED:
+        attr.rule_type = rule_type
+        if rule_type == SecurityRuleType.SELECTED:
             users = []
             for u in v["users"]:
                 users.append(int(u))
-            attr = SelectedRule(users=users)
+            attr.users = users
 
     user: User = manager.middleware_data["user"]
     tasklist = TaskList(

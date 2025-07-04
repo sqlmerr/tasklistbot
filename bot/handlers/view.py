@@ -55,6 +55,8 @@ async def open_tasklist(query: InlineQuery, i18n: I18nContext):
             ]
         )
         return
+    markup = generate_tasklist_markup(tasklist)
+    print(markup, tasklist.options)
     await query.answer(
         [
             InlineQueryResultArticle(
@@ -63,19 +65,21 @@ async def open_tasklist(query: InlineQuery, i18n: I18nContext):
                 input_message_content=InputTextMessageContent(
                     message_text=tasklist.title,
                 ),
-                reply_markup=generate_tasklist_markup(tasklist),
+                reply_markup=markup,
             )
-        ]
+        ],
+        cache_time=5
     )
 
 
 def generate_tasklist_markup(tasklist: TaskList) -> InlineKeyboardMarkup:
+    print(tasklist.options)
     b = InlineKeyboardBuilder()
     for i, o in enumerate(tasklist.options):
         b.button(
             text=f"{i}. {o.name} " + ("✅" if o.completed else ""),
             callback_data=OptionClickData(
-                list_id=str(tasklist.id), option_index=i, user_id=tasklist.user.user_id
+                list_id=str(tasklist.id), option_index=i
             ),
         )
 
@@ -87,7 +91,6 @@ def generate_tasklist_markup(tasklist: TaskList) -> InlineKeyboardMarkup:
 async def option_click(
     call: CallbackQuery, callback_data: OptionClickData, i18n: I18nContext, bot: Bot
 ):
-    print("a")
     tasklist = await TaskList.get(callback_data.list_id, fetch_links=True)
     if not tasklist:
         return
@@ -95,7 +98,6 @@ async def option_click(
     if not ensure_user_has_permission(
         tasklist, call.from_user.id, "mark_tasks_as_completed"
     ):
-        print("b")
         await call.answer(i18n.get("not-allowed"))
         return
     await call.answer()
