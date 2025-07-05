@@ -18,3 +18,12 @@ tasklist-menu-delete-mode-msg = Delete mode enabled!
 tasklist-confirm-delete = Are you sure you want to delete this task?
 
 tasklist-all-msg = <i>Your tasklists:</i>
+
+tasklist-settings-security-btn = Security
+
+tasklist-settings-security-msg = Task list security:
+
+tasklist-settings-security-edit-permission-msg = Editing permission <code>{ $perm }</code>
+
+tasklist-settings-security-selected-users-edit-btn = Users
+

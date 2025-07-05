@@ -19,3 +19,12 @@ tasklist-menu-delete-mode-msg = Режим очистки активирован
 tasklist-confirm-delete = Вы уверены, что вы хотите удалить эту задачу?
 
 tasklist-all-msg = <i>Ваши списки задач:</i>
+
+tasklist-settings-security-btn = Безопасность
+
+tasklist-settings-security-msg = Настройки безопасности списка задач:
+
+tasklist-settings-security-edit-permission-msg = Редактирование разрешения <code>{ $perm }</code>
+
+tasklist-settings-security-selected-users-edit-btn = Пользователи
+

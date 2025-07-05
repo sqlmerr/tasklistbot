@@ -56,7 +56,6 @@ async def open_tasklist(query: InlineQuery, i18n: I18nContext):
         )
         return
     markup = generate_tasklist_markup(tasklist)
-    print(markup, tasklist.options)
     await query.answer(
         [
             InlineQueryResultArticle(
