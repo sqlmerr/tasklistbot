@@ -4,10 +4,13 @@ import logging
 from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
+from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.fsm.storage.base import DefaultKeyBuilder
 from aiogram.client.default import DefaultBotProperties
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 from aiogram_i18n import I18nMiddleware
 from aiogram_i18n.cores import FluentCompileCore
+from aiogram_i18n.managers import FSMManager
 
 from bot.handlers import register_routers
 from bot.middlewares import UserMiddleware, ThrottlingMiddleware
@@ -20,7 +23,10 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from bot.dialogs import create_list as create_list_dialog
 from bot.dialogs import edit_list_settings as edit_list_settings_dialog
+from bot.dialogs import list_viewer as list_viewer_dialog
 from aiogram_dialog import setup_dialogs
+
+from redis.asyncio import Redis
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -31,7 +37,9 @@ async def startup(bot: Bot):
 
 
 def create_dispatcher() -> Dispatcher:
-    dp = Dispatcher()
+    redis = Redis.from_url(settings.REDIS_URL.get_secret_value())
+    storage = RedisStorage(redis, key_builder=DefaultKeyBuilder(with_destiny=True))
+    dp = Dispatcher(storage=storage)
     dp.startup.register(startup)
 
     dp.message.middleware(ThrottlingMiddleware())
@@ -43,11 +51,12 @@ def create_dispatcher() -> Dispatcher:
 
     router = register_routers()
     dp.include_router(router)
-    dp.include_routers(create_list_dialog.ui, edit_list_settings_dialog.ui)
+    dp.include_routers(create_list_dialog.ui, edit_list_settings_dialog.ui, list_viewer_dialog.ui)
     setup_dialogs(dp)
 
     i18n_middleware = I18nMiddleware(
-        core=FluentCompileCore(path="bot/locales/{locale}/")
+        core=FluentCompileCore(path="bot/locales/{locale}/", default_locale="en"),
+        manager=FSMManager(default_locale="en")
     )
     i18n_middleware.setup(dispatcher=dp)
 

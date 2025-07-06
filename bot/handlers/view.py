@@ -11,11 +11,13 @@ from aiogram.types import (
 )
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.filters import Command
+from aiogram_dialog import DialogManager
 from aiogram_i18n import I18nContext
 from beanie import PydanticObjectId
 
 from bot.db.models import SecurityRuleType, TaskList, User
 from bot.db.requests import get_task_lists_by_user
+from bot.dialogs.states import ListViewerDialog
 from bot.utils.calldata import OptionClickData
 from bot.utils.permissions import ensure_user_has_permission
 
@@ -124,7 +126,16 @@ async def get_all_lists(message: Message, user: User, i18n: I18nContext):
     tasklists = await get_task_lists_by_user(user.id)
     b = InlineKeyboardBuilder()
     for t in tasklists:
-        b.button(text=t.title, switch_inline_query_current_chat=f"open:{t.id}")
+        b.button(text=t.title, callback_data=f"open:{t.id}")
     b.adjust(1)
 
     await message.reply(i18n.tasklist.all.msg(), reply_markup=b.as_markup())
+
+@router.callback_query(F.data.startswith("open:"))
+async def open_list(call: CallbackQuery, dialog_manager: DialogManager):
+    tasklist_id = call.data.split(":")[1]
+    tasklist = await TaskList.get(tasklist_id)
+    if not tasklist:
+        return
+    await call.answer()
+    await dialog_manager.start(ListViewerDialog.main, data={"tasklist_id": str(tasklist.id)})

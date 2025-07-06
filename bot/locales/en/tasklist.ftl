@@ -6,8 +6,6 @@ tasklist-settings-msg = Configuring task list <code>{ $name }</code>
 
 tasklist-settings-btn = Settings
 
-tasklist-settings-rename-btn = Rename
-
 tasklist-settings-rename-msg = Enter a new tasklist name. Current name: { $name }. Maximum 128 letters
 
 tasklist-done = Task list <code>{ $name }</code> successfully created! 
@@ -27,3 +25,8 @@ tasklist-settings-security-edit-permission-msg = Editing permission <code>{ $per
 
 tasklist-settings-security-selected-users-edit-btn = Users
 
+tasklist-menu-edit-mode-msg = Edit mode enabled!
+
+tasklist-edit-menu-msg = Editing task...
+
+tasklist-edit-menu-rename-msg = Enter new task name:

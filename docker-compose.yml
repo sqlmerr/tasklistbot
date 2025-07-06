@@ -7,6 +7,15 @@ services:
       - 27017:27017
     env_file:
       - .env
+  redis:
+    image: bitnami/redis:latest
+    volumes:
+      - redis:/var/lib/redis
+      - redis-config:/usr/local/etc/redis/redis.conf
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"
   bot:
     build: 
       context: .
@@ -17,5 +26,8 @@ services:
       - '8000:8000'
     depends_on:
       - db
+      - redis
 volumes:
   mongodb-data:
+  redis:
+  redis-config:

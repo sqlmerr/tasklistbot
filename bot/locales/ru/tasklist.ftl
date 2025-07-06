@@ -6,8 +6,6 @@ tasklist-settings-msg = Настройка списка задач <code>{ $name
 
 tasklist-settings-btn = Настройки
 
-tasklist-settings-rename-btn = Переименовать
-
 tasklist-settings-rename-msg = Введите новое имя. Текущее имя: { $name }. Максимальная длина - 128 символов
 
 tasklist-done = Список задач <code>{ $name }</code> успешно создан! 
@@ -28,3 +26,8 @@ tasklist-settings-security-edit-permission-msg = Редактирование р
 
 tasklist-settings-security-selected-users-edit-btn = Пользователи
 
+tasklist-menu-edit-mode-msg = Режим редактирования активирован!
+
+tasklist-edit-menu-msg = Редактирование задачи...
+
+tasklist-edit-menu-rename-msg = Введите новое имя для задачи:

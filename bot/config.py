@@ -5,6 +5,7 @@ from pydantic import SecretStr, Field
 class Settings(BaseSettings):
     BOT_TOKEN: SecretStr
     MONGO_URL: SecretStr = "mongodb://localhost:27017/"
+    REDIS_URL: SecretStr
 
     use_webhooks: bool = False
     WEB_SERVER_HOST: str = "127.0.0.1"

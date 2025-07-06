@@ -83,7 +83,7 @@ ui = Dialog(
     Window(
         I18NFormat("tasklist-settings-msg", name=Format("{name}")),
         SwitchTo(
-            I18NFormat("tasklist-settings-rename-btn"),
+            I18NFormat("rename-btn"),
             id="switch_to_rename",
             state=EditListSettingsDialog.change_name,
         ),
