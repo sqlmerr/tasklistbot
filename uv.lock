@@ -13,7 +13,7 @@ wheels = [
 
 [[package]]
 name = "aiogram"
-version = "3.20.0.post0"
+version = "3.21.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiofiles" },
@@ -23,9 +23,9 @@ dependencies = [
     { name = "pydantic" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bd/80/bd7b56707ed707317caec4a9729c0d795bce438662613ccc9add50568363/aiogram-3.20.0.post0.tar.gz", hash = "sha256:2443799b4514ac251fcf2d561603e250f8763808542222fa1136901058eda9a3", size = 1487433, upload-time = "2025-04-16T20:30:02.04Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/70/11/414c49e31ac353b12dba4f89e66141e4504d359c453dfdd5d259cefb97a4/aiogram-3.21.0.tar.gz", hash = "sha256:24cd0015ed73471fa3028b47788e57b43a475c66d176a857de2b6b67bd37e1dd", size = 1500486, upload-time = "2025-07-05T00:20:03.203Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/03/18/c1ec098e7bd683974c56b97ef0c3e41260d4c4a88168a30238ec97e4faa3/aiogram-3.20.0.post0-py3-none-any.whl", hash = "sha256:c8f5a68b0729e74efa15a7fc285bd49fa3d0603de5e424404219a822f8e5f4d1", size = 666622, upload-time = "2025-04-16T20:29:59.816Z" },
+    { url = "https://files.pythonhosted.org/packages/c7/0b/606c9cdff82f5a5e004d72a14368d46ed00298c94a8d83b6faf8fb70499f/aiogram-3.21.0-py3-none-any.whl", hash = "sha256:0995e11be66bba46c0aab4ac8a41587fb2749b72399aff46a20e6610ccebe3ae", size = 677316, upload-time = "2025-07-05T00:20:01.322Z" },
 ]
 
 [[package]]
@@ -547,6 +547,15 @@ wheels = [
 ]
 
 [[package]]
+name = "redis"
+version = "6.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ea/9a/0551e01ba52b944f97480721656578c8a7c46b51b99d66814f85fe3a4f3e/redis-6.2.0.tar.gz", hash = "sha256:e821f129b75dde6cb99dd35e5c76e8c49512a5a0d8dfdc560b2fbd44b85ca977", size = 4639129, upload-time = "2025-05-28T05:01:18.91Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/67/e60968d3b0e077495a8fee89cf3f2373db98e528288a48f1ee44967f6e8c/redis-6.2.0-py3-none-any.whl", hash = "sha256:c8ddf316ee0aab65f04a11229e94a64b2618451dab7a67cb2f77eb799d872d5e", size = 278659, upload-time = "2025-05-28T05:01:16.955Z" },
+]
+
+[[package]]
 name = "ruff"
 version = "0.11.12"
 source = { registry = "https://pypi.org/simple" }
@@ -573,7 +582,7 @@ wheels = [
 
 [[package]]
 name = "tasklistbot"
-version = "0.1.0"
+version = "0.2.1"
 source = { virtual = "." }
 dependencies = [
     { name = "aiogram" },
@@ -582,6 +591,7 @@ dependencies = [
     { name = "beanie" },
     { name = "cachetools" },
     { name = "pydantic-settings" },
+    { name = "redis" },
 ]
 
 [package.dev-dependencies]
@@ -591,12 +601,13 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aiogram", specifier = ">=3.20.0.post0" },
+    { name = "aiogram", specifier = ">=3.21.0" },
     { name = "aiogram-dialog", specifier = ">=2.3.1" },
     { name = "aiogram-i18n", extras = ["compiler"], specifier = ">=1.4" },
     { name = "beanie", specifier = ">=1.29.0" },
     { name = "cachetools", specifier = ">=5.5.2" },
     { name = "pydantic-settings", specifier = ">=2.9.1" },
+    { name = "redis", specifier = ">=6.2.0" },
 ]
 
 [package.metadata.requires-dev]

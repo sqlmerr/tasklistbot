@@ -146,7 +146,6 @@ async def switch_to_settings(
 
 
 async def on_start(data: dict, manager: DialogManager):
-    print("$$$", data)
     manager.dialog_data.update(data)
 
 

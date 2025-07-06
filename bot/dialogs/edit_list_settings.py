@@ -83,12 +83,12 @@ ui = Dialog(
     Window(
         I18NFormat("tasklist-settings-msg", name=Format("{name}")),
         SwitchTo(
-            I18NFormat("tasklist-settings-rename-btn"),
+            I18NFormat("rename-btn"),
             id="switch_to_rename",
             state=EditListSettingsDialog.change_name,
         ),
         SwitchTo(
-            Const("tasklist-settings-security-btn"),
+            I18NFormat("tasklist-settings-security-btn"),
             id="switch_to_security",
             state=EditListSettingsDialog.edit_security,
         ),
@@ -104,7 +104,7 @@ ui = Dialog(
         state=EditListSettingsDialog.change_name,
     ),
     Window(
-        Const("tasklist-settings-security-msg"),
+        I18NFormat("tasklist-settings-security-msg"),
         # ListGroup(
         #     Button(Format("{item}"), id="sec", on_click=edit_security),
         #     id="l",
@@ -136,7 +136,7 @@ ui = Dialog(
         state=EditListSettingsDialog.edit_security,
     ),
     Window(
-        Const("tasklist-settings-security-edit-permission-msg"),
+        I18NFormat("tasklist-settings-security-edit-permission-msg", perm=F["dialog_data"]["_editing_security_perm"]),
         Toggle(
             Format("{item}"),
             id="rule_toggle",
@@ -146,7 +146,7 @@ ui = Dialog(
             on_click=change_rule,
         ),
         Button(
-            Const("tasklist-settings-security-selected-users-edit-btn"),
+            I18NFormat("tasklist-settings-security-selected-users-edit-btn"),
             id="update_selected_users",
             when=F["dialog_data"]["_editing_security_perm_rule"]
             == SecurityRuleType.SELECTED,

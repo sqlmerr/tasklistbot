@@ -8,6 +8,6 @@ COPY uv.lock pyproject.toml ./
 
 RUN apt update && apt install libcairo2 git build-essential gcc -y --no-install-recommends
 
-RUN uv lock --frozen
+RUN uv lock --frozen && uv sync
 
 COPY . .

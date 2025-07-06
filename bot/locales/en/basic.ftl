@@ -13,3 +13,9 @@ not-found = Not found
 invalid-id = Invalid id
 
 not-allowed = You're not allowed to do this
+
+change-lang-msg = 🇺🇸 Choose language:
+
+success = Successfully!
+
+rename-btn = Rename
